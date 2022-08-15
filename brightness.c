@@ -3,7 +3,7 @@
 #include <string.h>
 
 int main (int argc, char *argv[]) {
-  if(argc < 3) return 1;
+  if(argc < 2) return 1;
   char basename[50] = "/sys/class/backlight/";
   strcat(basename, argv[1]);
   char location[50];
@@ -23,6 +23,12 @@ int main (int argc, char *argv[]) {
   FILE *fcurr = fopen(location, "w+");
   fscanf(fcurr, "%s", input);
   int curr = atoi(input);
+
+  if(argc < 3) {
+    fclose(fcurr);
+    printf("%d%%\n", curr * 100 / max);
+    return 0;
+  }
 
   int perc = atoi(argv[2]);
   int amount;
